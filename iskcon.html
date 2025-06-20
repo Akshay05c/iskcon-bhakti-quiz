@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ISKCON Bhakti Quiz</title>
+  <style>
+    body { font-family: Arial; background: #f5f3e7; padding: 20px; text-align: center; }
+    .box { background: #fff; border-radius: 10px; padding: 20px; max-width: 700px; margin: auto; box-shadow: 0 0 10px #ccc; }
+    h1 { color: #5a3e36; }
+    button { padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; font-size: 16px; background: #7c5316; color: white; }
+    button:hover { background: #5c3d11; cursor: pointer; }
+    #score { font-weight: bold; color: #316b00; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>🕉 ISKCON Bhakti Quiz Game</h1>
+    <h3 id="question">Loading...</h3>
+    <div id="options"></div>
+    <p id="result"></p>
+    <p id="score">Score: 0</p>
+    <button onclick="nextQuestion()">Next Question</button>
+  </div>
+
+  <script>
+    const quiz = [
+      { q: "Who is the founder-acharya of ISKCON?", options: ["Srila Bhaktisiddhanta", "Swami Vivekananda", "Srila Prabhupada", "Ramanujacharya"], answer: "Srila Prabhupada" },
+      { q: "Which scripture is most studied in ISKCON?", options: ["Bible", "Quran", "Bhagavad-gita", "Mahabharata"], answer: "Bhagavad-gita" },
+      { q: "What is the maha-mantra?", options: ["Om Namah Shivaya", "Hare Krishna", "Ram Ram", "Om Mani Padme Hum"], answer: "Hare Krishna" },
+      { q: "How many rounds of japa do ISKCON devotees chant daily?", options: ["4", "8", "12", "16"], answer: "16" },
+      { q: "Who gave Srila Prabhupada the order to preach in the West?", options: ["His father", "Krishna", "His guru", "Narayana"], answer: "His guru" },
+      { q: "What is the purpose of human life according to ISKCON?", options: ["Enjoy sense pleasure", "Get rich", "Serve Krishna", "Worship ancestors"], answer: "Serve Krishna" },
+      { q: "What is the spiritual world called?", options: ["Vaikuntha", "Swarg", "Heaven", "Hell"], answer: "Vaikuntha" },
+      { q: "Who is Lord Chaitanya?", options: ["A king", "A yogi", "Krishna Himself", "A prophet"], answer: "Krishna Himself" },
+      { q: "Who is Radha?", options: ["Krishna’s sister", "Krishna’s consort", "Krishna’s mother", "Krishna’s devotee"], answer: "Krishna’s consort" },
+      { q: "What does 'Bhakti' mean?", options: ["Fasting", "Yoga", "Devotional Service", "Meditation"], answer: "Devotional Service" },
+      // ... Add more questions here up to 50 ...
+      { q: "What is the name of ISKCON's main publishing house?", options: ["Bhakti Press", "Krishna Store", "BBT", "Vedanta Books"], answer: "BBT" },
+      { q: "Which book did Srila Prabhupada translate and comment on fully?", options: ["Vedas", "Upanishads", "Bhagavatam", "Ramayana"], answer: "Bhagavatam" },
+      { q: "Which prasadam item is most famous in ISKCON?", options: ["Halwa", "Khichdi", "Kachaudi", "Kheer"], answer: "Khichdi" },
+      { q: "Which festival celebrates Krishna lifting Govardhan Hill?", options: ["Diwali", "Holi", "Govardhan Puja", "Janmashtami"], answer: "Govardhan Puja" },
+      { q: "What is the meaning of 'ISKCON'?", options: ["Indian Society of Knowledge", "International Society for Krishna Consciousness", "Indian Spiritual Krishna Council", "In Search of Krishna Community"], answer: "International Society for Krishna Consciousness" },
+      { q: "Who is the eternal enemy of Krishna in Vrindavan pastimes?", options: ["Bali", "Ravana", "Kamsa", "Shishupal"], answer: "Kamsa" },
+      { q: "Which sound destroys negative karma according to scriptures?", options: ["Drum", "Shankh", "Hare Krishna Mahamantra", "Aarti bell"], answer: "Hare Krishna Mahamantra" },
+      { q: "Where was Srila Prabhupada born?", options: ["Mayapur", "Kolkata", "Vrindavan", "Puri"], answer: "Kolkata" },
+      { q: "How many chapters are there in Bhagavad-gita?", options: ["14", "16", "18", "20"], answer: "18" },
+      { q: "Which form of Krishna is known for playing flute?", options: ["Vasudeva Krishna", "Dwarka Krishna", "Vrindavan Krishna", "Kurukshetra Krishna"], answer: "Vrindavan Krishna" }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quiz[current];
+      document.getElementById("question").innerText = `Q${current + 1}: ${q.q}`;
+      let optionsHTML = "";
+      q.options.forEach(opt => {
+        optionsHTML += `<button onclick="checkAnswer('${opt}')">${opt}</button>`;
+      });
+      document.getElementById("options").innerHTML = optionsHTML;
+      document.getElementById("result").innerText = "";
+    }
+
+    function checkAnswer(selected) {
+      const correct = quiz[current].answer;
+      if (selected === correct) {
+        document.getElementById("result").innerText = "✅ Correct!";
+        score++;
+      } else {
+        document.getElementById("result").innerText = `❌ Wrong! Correct: ${correct}`;
+      }
+      document.getElementById("score").innerText = "Score: " + score;
+      disableButtons();
+    }
+
+    function disableButtons() {
+      const buttons = document.querySelectorAll("#options button");
+      buttons.forEach(btn => btn.disabled = true);
+    }
+
+    function nextQuestion() {
+      if (current < quiz.length - 1) {
+        current++;
+        loadQuestion();
+      } else {
+        document.getElementById("question").innerText = "🎉 You completed the ISKCON quiz!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("result").innerText = `📊 Final Score: ${score}/${quiz.length}`;
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
